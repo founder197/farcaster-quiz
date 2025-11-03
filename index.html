@@ -49,14 +49,13 @@
   <script type="module">
     import { frameSdk } from "https://cdn.farcaster.xyz/frame-sdk.min.js";
 
+    // Inicializa o SDK do Farcaster
     const sdk = await frameSdk();
 
-    // avisa ao Warpcast que o app está pronto
-    window.addEventListener("load", () => {
-      sdk.actions.ready();
-    });
+    // Avisa ao Warpcast que o app está pronto
+    sdk.actions.ready();
 
-    // lógica do quiz
+    // Lógica do quiz
     const buttons = document.querySelectorAll("button");
     const message = document.getElementById("message");
 
