@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farcaster Quiz</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #0d0d0d;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    button {
+      margin: 8px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #5a3cff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #7c5cff;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Farcaster Quiz</h1>
+  <p>Qual é o token nativo do Ethereum?</p>
+  <div id="answers">
+    <button data-answer="BTC">BTC</button>
+    <button data-answer="ETH">ETH</button>
+    <button data-answer="SOL">SOL</button>
+  </div>
+  <div class="message" id="message"></div>
+
+  <script type="module">
+    import { frameSdk } from "https://cdn.farcaster.xyz/frame-sdk.min.js";
+
+    const sdk = await frameSdk();
+
+    // avisa ao Warpcast que o app está pronto
+    window.addEventListener("load", () => {
+      sdk.actions.ready();
+    });
+
+    // lógica do quiz
+    const buttons = document.querySelectorAll("button");
+    const message = document.getElementById("message");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const answer = btn.dataset.answer;
+        if (answer === "ETH") {
+          message.textContent = "✅ Certo! Você acertou!";
+        } else {
+          message.textContent = "❌ Errado. A resposta certa é ETH.";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
