@@ -1,51 +1,119 @@
-<script type="module">
-// import { frameSdk } from "https://cdn.farcaster.xyz/frame-sdk.min.js";
-// const sdk = await frameSdk();
-// sdk.actions.ready();
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Web3</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #0d0d0d;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
 
-const quiz = [
-  { q: "Qual é o token nativo da rede Ethereum?", a: ["BTC", "ETH", "SOL", "BNB"], c: "ETH" },
-  { q: "O que significa NFT?", a: ["Non-Fungible Token", "Network File Transfer", "New Finance Token", "Non-Financial Technology"], c: "Non-Fungible Token" },
-  { q: "O que é uma DAO?", a: ["Organização Autônoma Descentralizada", "Data Access Operation", "Digital Asset Option", "Distributed App Object"], c: "Organização Autônoma Descentralizada" },
-  { q: "O que significa DeFi?", a: ["Decentralized Finance", "Default Finance", "Defined Fund", "Digital Finance"], c: "Decentralized Finance" },
-  { q: "O que é Web3?", a: ["Nova versão do navegador", "Internet descentralizada baseada em blockchain", "Aplicativo de chat", "Rede social"], c: "Internet descentralizada baseada em blockchain" }
-];
+    h1 {
+      color: #8b5cf6;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
 
-let index = 0, score = 0;
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const messageEl = document.getElementById("message");
+    button {
+      margin: 8px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #5a3cff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+    }
 
-function loadQuestion() {
-  if (index >= quiz.length) {
-    questionEl.textContent = `Quiz finalizado! 🏁`;
-    answersEl.innerHTML = "";
-    messageEl.textContent = `Você acertou ${score} de ${quiz.length}.`;
-    return;
-  }
-  const q = quiz[index];
-  questionEl.textContent = `${index + 1}. ${q.q}`;
-  answersEl.innerHTML = "";
-  q.a.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.textContent = opt;
-    btn.onclick = () => checkAnswer(opt);
-    answersEl.appendChild(btn);
-  });
-  messageEl.textContent = "";
-}
+    button:hover {
+      background-color: #7c5cff;
+    }
 
-function checkAnswer(answer) {
-  const correct = quiz[index].c;
-  if (answer === correct) {
-    messageEl.textContent = "✅ Correto!";
-    score++;
-  } else {
-    messageEl.textContent = `❌ Errado. Resposta: ${correct}`;
-  }
-  index++;
-  setTimeout(loadQuestion, 1200);
-}
+    button:active {
+      transform: scale(0.97);
+    }
 
-loadQuestion();
-</script>
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+      min-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quiz Web3</h1>
+  <p id="question">Carregando pergunta...</p>
+  <div id="answers"></div>
+  <div class="message" id="message"></div>
+
+  <script>
+    // Lista de perguntas e respostas
+    const quiz = [
+      { q: "Qual é o token nativo da rede Ethereum?", a: ["BTC", "ETH", "SOL", "BNB"], c: "ETH" },
+      { q: "O que significa NFT?", a: ["Non-Fungible Token", "Network File Transfer", "New Finance Token", "Non-Financial Technology"], c: "Non-Fungible Token" },
+      { q: "O que é uma DAO?", a: ["Organização Autônoma Descentralizada", "Data Access Operation", "Digital Asset Option", "Distributed App Object"], c: "Organização Autônoma Descentralizada" },
+      { q: "O que significa DeFi?", a: ["Decentralized Finance", "Default Finance", "Defined Fund", "Digital Finance"], c: "Decentralized Finance" },
+      { q: "O que é Web3?", a: ["Nova versão do navegador", "Internet descentralizada baseada em blockchain", "Aplicativo de chat", "Rede social"], c: "Internet descentralizada baseada em blockchain" }
+    ];
+
+    // Variáveis do quiz
+    let index = 0;
+    let score = 0;
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const messageEl = document.getElementById("message");
+
+    // Função para carregar uma nova pergunta
+    function loadQuestion() {
+      if (index >= quiz.length) {
+        questionEl.textContent = `🏁 Quiz finalizado!`;
+        answersEl.innerHTML = "";
+        messageEl.textContent = `Você acertou ${score} de ${quiz.length}.`;
+        return;
+      }
+
+      const q = quiz[index];
+      questionEl.textContent = `${index + 1}. ${q.q}`;
+      answersEl.innerHTML = "";
+
+      q.a.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(opt);
+        answersEl.appendChild(btn);
+      });
+
+      messageEl.textContent = "";
+    }
+
+    // Função para verificar a resposta
+    function checkAnswer(answer) {
+      const correct = quiz[index].c;
+
+      if (answer === correct) {
+        messageEl.textContent = "✅ Correto!";
+        score++;
+      } else {
+        messageEl.textContent = `❌ Errado. Resposta: ${correct}`;
+      }
+
+      index++;
+      setTimeout(loadQuestion, 1200);
+    }
+
+    // Inicializa o quiz
+    loadQuestion();
+  </script>
+</body>
+</html>
